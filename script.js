@@ -1,6 +1,8 @@
 // Gestion du mode sombre
 const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
 // Vérifier le thème sauvegardé
 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -10,9 +12,14 @@ html.setAttribute('data-theme', savedTheme);
 function toggleTheme() {
     const currentTheme = html.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+
+    // Fermer le menu mobile si ouvert pour forcer la prise en compte du nouveau thème
+    if (navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+    }
 }
 
 // Écouter le clic sur le bouton de thème
@@ -21,9 +28,6 @@ if (themeToggle) {
 }
 
 // Navigation mobile
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
